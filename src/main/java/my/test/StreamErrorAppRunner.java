@@ -56,11 +56,13 @@ class TestEntityLogger {
     }
 
     @Scheduled(fixedDelay = 1100, initialDelay = 1100)
-    @Transactional
+    //@Transactional // <- Uncomment this line and the error will go away.
     public void logAllTestEntities() {
         try (Stream<TestEntity> entities = testEntityRepository.findEntities()) {
             entities.forEach(e -> {
-                e.setName(e.getName() + "_new");
+                // It's actually not important if you do or do not modify the db record in this method.
+                // It just as well might be a readOnly method.
+                e.setName("new name" + Math.random());
                 testEntityRepository.save(e);
                 logger.info("Entity: " + e.toString());
             });
