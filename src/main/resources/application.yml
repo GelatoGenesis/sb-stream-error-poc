@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    removeAbandonedTimeout: 1
+    remove-abandoned: true
+    log-abandoned: true
